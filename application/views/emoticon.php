@@ -22,18 +22,16 @@
 		</div>
 	</div>
 	<div class="row">
+		<?php array_pop($show);?>
 		<div class="col-lg-6" id="emojis" style="height: 40vh; overflow-y: scroll;">
 			<?php
-				foreach ($show as $value) {
-					$array = array();
-					foreach ($alt as $alts) {
-						$array[] = $alts;
-					}
-
-					echo '<a href="#" id="emoji" class="emoji"><input type="hidden"  value="'.$array[0].'" id="alt">'.$value.'</a>';
-					
+				
+				for($i=0;$i < count($show);$i++){
+					echo '<a href="#" id="emoji" class="emoji" data-value = "'.$alt[$i].'" >'.$show[$i].'</a>';
 				}
+				
 			?>
+
 		</div>
 	</div>
 </div>
@@ -42,12 +40,13 @@
 
 <script>
 	$(document).ready(function(){
-
-		$('#emoji').on('click',function(e){
+		
+		$(document).on("click","#emoji",function(e){
 			e.preventDefault();
-
-			var alt =  $(this).closest('input[class^=emoji]').find('#alt').html();
-			$('#text-area').val(alt);
+			var emojiValue = $(this).attr('data-value');
+			// console.log("clicked " + emojiValue);
+			var textAreaValue = $("#text-area").val();
+			$('#text-area').val(textAreaValue+emojiValue);
 		})
 
 	});
